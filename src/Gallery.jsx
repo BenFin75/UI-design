@@ -68,7 +68,7 @@ function Gallery({ categorySelection }) {
   return (
     <div className="gallery">
       <div className="header">
-        <h1>{categorySelection}</h1>
+        <h1>{Object.keys(categories)[categorySelection]}</h1>
         <h1>-</h1>
         {
         Object.values(images).map((image, index) => (
