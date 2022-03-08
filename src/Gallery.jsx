@@ -12,6 +12,11 @@ function Gallery({ categorySelection }) {
 
   const refreshPage = true;
 
+  let title = Object.keys(categories)[0];
+  if (Object.keys(categories)[categorySelection]) {
+    title = Object.keys(categories)[categorySelection];
+  }
+
   let images = Object.values(categories)[0];
   if (categorySelection >= 0) {
     images = Object.values(categories)[categorySelection];
@@ -68,7 +73,7 @@ function Gallery({ categorySelection }) {
   return (
     <div className="gallery">
       <div className="header">
-        <h1>{Object.keys(categories)[categorySelection]}</h1>
+        <h1>{title}</h1>
         <h1>-</h1>
         {
         Object.values(images).map((image, index) => (
