@@ -177,8 +177,8 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: fit-content;
-  height: fit-content;
+  width: 90%;
+  height: 90%;
   padding: 50px 20px 0px 20px;
   background-color: var(--menu-alt-color);
   border-radius: 20px;
