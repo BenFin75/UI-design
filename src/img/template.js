@@ -1,8 +1,8 @@
-const one = require('./imageLoader').default;
-const two = require('./imageLoader').default;
-const three = require('./imageLoader').default;
-const four = require('./imageLoader').default;
-const five = require('./imageLoader').default;
+const one = require('./imageLoader');
+const two = require('./imageLoader');
+const three = require('./imageLoader');
+const four = require('./imageLoader');
+const five = require('./imageLoader');
 
 const images = {
   one: {

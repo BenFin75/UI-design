@@ -1,8 +1,9 @@
 const one = require('./pokeroom.png');
 const two = require('./shiba-shop.jpg');
 const three = require('./dumpling.jpg');
-const five = require('./ramen.jpg');
 const four = require('./cozy.jpg');
+const five = require('./ramen.jpg');
+const six = require('./crossing.jpg');
 
 const images = {
   one: {
@@ -34,6 +35,12 @@ const images = {
     title: 'Ramen Shop',
     by: 'Hammlingu',
     link: 'https://www.instagram.com/p/CLLQTG4jDxT/',
+  },
+  six: {
+    image: six,
+    title: 'Aerial Crossing',
+    by: 'トーコ',
+    link: 'https://www.pixiv.net/en/artworks/72912299',
   },
 };
 
