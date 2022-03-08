@@ -31,7 +31,6 @@ function Gallery({ categorySelection }) {
       headerButtons.forEach((button) => button.classList.remove('clicked'));
       headerButtons[currentIndex].classList.add('clicked');
       setCurrentImage(Object.values(images)[currentIndex]);
-      console.log(Object.keys(images)[currentIndex]);
     }
   }, [categorySelection]);
 
