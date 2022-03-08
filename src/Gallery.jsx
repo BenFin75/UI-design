@@ -10,8 +10,7 @@ function Gallery({ categorySelection }) {
     categorySelection: PropTypes.string.isRequired,
   };
 
-  const refreshPage = true;
-
+  // handles changing the title of the gallery based on the catergory the user selects
   let title = Object.keys(categories)[0];
   if (Object.keys(categories)[categorySelection]) {
     title = Object.keys(categories)[categorySelection];
@@ -30,13 +29,11 @@ function Gallery({ categorySelection }) {
   const [currentImage, setCurrentImage] = useState(Object.values(images)[currentIndex]);
 
   useEffect(() => {
-    if (refreshPage) {
-      currentIndex = 0;
-      const headerButtons = document.querySelectorAll('.header > button');
-      headerButtons.forEach((button) => button.classList.remove('clicked'));
-      headerButtons[currentIndex].classList.add('clicked');
-      setCurrentImage(Object.values(images)[currentIndex]);
-    }
+    currentIndex = 0;
+    const headerButtons = document.querySelectorAll('.header > button');
+    headerButtons.forEach((button) => button.classList.remove('clicked'));
+    headerButtons[currentIndex].classList.add('clicked');
+    setCurrentImage(Object.values(gallery)[currentIndex]);
   }, [categorySelection]);
 
   const handleScrollImage = (e) => {
