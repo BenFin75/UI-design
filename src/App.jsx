@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Navbar from './Navbar';
 import './App.css';
 import Home from './Home';
@@ -8,6 +8,7 @@ import OutsideClickListener from './OutsideClickListener';
 
 function App() {
   const [categorySelection, setCategorySelection] = useState('slice of life');
+  const menuUpdater = useRef(null);
 
   const getCategorySelection = (selection) => {
     setCategorySelection(selection);

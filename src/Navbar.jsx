@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Icon from '@mdi/react';
 import { mdiMenu } from '@mdi/js';
 
-const handleMenu = () => {
-  const menuIcon = document.querySelector('.menu-icon');
-  menuIcon.classList.toggle('open');
-  const menu = document.querySelector('.dropdown');
-  menu.classList.toggle('open');
-  // if (menuIcon.classList.contains('open')) {
-  //   menu.style.height = 'auto';
-  // } else {
-  //   menu.style.height = '0px';
-  // }
-};
+function Navbar({ menuUpdater }) {
+  let menuChange = false;
 
-function Navbar() {
+  const handleMenu = () => {
+    const menuIcon = document.querySelector('.menu-icon');
+    menuIcon.classList.toggle('open');
+    menuChange = !menuChange;
+    menuUpdater.current(menuChange);
+  };
+
+  useEffect(() => {
+    if (menuUpdater.current != null) {
+      menuUpdater.current(true);
+    }
+  }, [menuChange]);
+
   return (
     <div className="navbar">
       <div className="menu-button">
@@ -30,5 +34,9 @@ function Navbar() {
     </div>
   );
 }
+
+Navbar.propTypes = {
+  menuUpdater: PropTypes.objectOf(PropTypes.func).isRequired,
+};
 
 export default Navbar;
