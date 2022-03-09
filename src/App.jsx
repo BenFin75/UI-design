@@ -3,7 +3,8 @@ import Navbar from './Navbar';
 import './App.css';
 import Home from './Home';
 import Footer from './footer';
-import DropdownMenu from './DropdonwMenu';
+import DropdownMenu from './DropdownMenu/DropdonwMenu';
+import OutsideClickListener from './OutsideClickListener';
 
 function App() {
   const [categorySelection, setCategorySelection] = useState('slice of life');
@@ -14,9 +15,11 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
-      <DropdownMenu getCategorySelection={getCategorySelection} />
-      <Home categorySelection={categorySelection} />
+      <OutsideClickListener menuUpdater={menuUpdater}>
+        <Navbar menuUpdater={menuUpdater} />
+        <DropdownMenu getCategorySelection={getCategorySelection} menuUpdater={menuUpdater} />
+      </OutsideClickListener>
+      <Home categorySelection={categorySelection} menuUpdater={menuUpdater} />
       <Footer />
     </div>
   );
