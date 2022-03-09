@@ -1,6 +1,7 @@
 {
   "name": "ui-design",
   "version": "0.1.0",
+  "homepage": "https://benfin75.github.io/UI-design",
   "private": true,
   "dependencies": {
     "@mdi/js": "^6.5.95",
