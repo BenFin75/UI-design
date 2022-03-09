@@ -73,53 +73,6 @@ a {
   transform: rotate(90deg);
 }
 
-/* dropdown styles */
-
-.dropdown {
-  position: absolute;
-  top: 80px;
-  height: 0px;
-  width: 15em;
-  margin-bottom: auto;
-  overflow: hidden;
-  background-color: var(--menu-color);
-  border-bottom-right-radius: 25px;
-  box-shadow: 0px 0px 11px 0px black;
-  transition: all .75s;
-  z-index: 1;
-}
-
-.App .dropdown.open {
-  height: 470px;
-}
-
-.dropdown > ul {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 0;
-  margin-top: 50px;
-  gap: 50px;
-}
-
-.dropdown li {
-  list-style: none;
-  margin: 0;
-}
-
-.dropdown li > button {
-  background-color: var(--navbar-color);
-  color: var(--big-text-color);
-  letter-spacing: 2px;
-  height: 3em;
-  font-size: 1.2em;
-  font-weight: 600;
-  border: 4px solid #13212c;
-  padding: 5px;
-  border-radius: 10px;
-  
-}
-
 /* home styles */
 
 .home {
@@ -144,6 +97,7 @@ a {
   background-color: var(--navbar-color);
   color: var(--big-text-color);
   border-radius: 20px;
+  box-shadow: 0px 0px 17px 1px black;
 }
 
 .gallery > .header {
