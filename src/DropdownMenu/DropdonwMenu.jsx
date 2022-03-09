@@ -9,16 +9,20 @@ import categories from '../img/imageLoader';
 function DropdownMenu({ getCategorySelection, menuUpdater }) {
   const [menuState, setMenuState] = useState(false);
 
-  const updateMenuState = (newState) => {
-    setMenuState(newState);
-  };
+  const updateMenuState = (() => {
+    const updateMenu = (newState) => {
+      setMenuState(newState);
+    };
+    const getMenuState = menuState;
+    return { updateMenu, getMenuState };
+  })();
 
   useEffect(() => {
     // the param must be reassigned
     // in order for useRef to be updated for callback
     // eslint-disable-next-line no-param-reassign
     menuUpdater.current = updateMenuState;
-  }, []);
+  });
 
   const handleSelection = (e) => {
     let selection;
@@ -68,7 +72,10 @@ function DropdownMenu({ getCategorySelection, menuUpdater }) {
 
 DropdownMenu.propTypes = {
   getCategorySelection: PropTypes.func.isRequired,
-  menuUpdater: PropTypes.objectOf(PropTypes.func),
+  menuUpdater: PropTypes.objectOf(PropTypes.shape({
+    updateMenu: PropTypes.func,
+    getMenuState: PropTypes.bool,
+  })),
 };
 
 DropdownMenu.defaultProps = {

@@ -14,7 +14,7 @@ function useOutsideAlerter(ref, menuUpdater) {
          */
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
-        menuUpdater.current(false);
+        menuUpdater.current.updateMenu(false);
       }
     }
 
@@ -45,7 +45,10 @@ function OutsideAlerter(props) {
 }
 
 OutsideAlerter.propTypes = {
-  menuUpdater: PropTypes.objectOf(PropTypes.func).isRequired,
+  menuUpdater: PropTypes.objectOf(PropTypes.shape({
+    updateMenu: PropTypes.func,
+    getMenuState: PropTypes.bool,
+  })).isRequired,
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 

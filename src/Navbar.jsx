@@ -1,23 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@mdi/react';
 import { mdiMenu } from '@mdi/js';
 
 function Navbar({ menuUpdater }) {
-  let menuChange = false;
-
   const handleMenu = () => {
-    const menuIcon = document.querySelector('.menu-icon');
-    menuIcon.classList.toggle('open');
-    menuChange = !menuChange;
-    menuUpdater.current(menuChange);
+    const menuChange = menuUpdater.current.getMenuState;
+    menuUpdater.current.updateMenu(!menuChange);
   };
-
-  useEffect(() => {
-    if (menuUpdater.current != null) {
-      menuUpdater.current(true);
-    }
-  }, [menuChange]);
 
   return (
     <div className="navbar">
@@ -36,7 +26,10 @@ function Navbar({ menuUpdater }) {
 }
 
 Navbar.propTypes = {
-  menuUpdater: PropTypes.objectOf(PropTypes.func).isRequired,
+  menuUpdater: PropTypes.objectOf(PropTypes.shape({
+    updateMenu: PropTypes.func,
+    getMenuState: PropTypes.bool,
+  })).isRequired,
 };
 
 export default Navbar;
