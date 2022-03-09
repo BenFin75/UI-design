@@ -32,7 +32,7 @@ function DropdownMenu({ getCategorySelection, menuUpdater }) {
       selection = e.target.className;
     }
     getCategorySelection(selection);
-    if (window.innerWidth < 510) {
+    if (window.innerWidth < 1100) {
       setMenuState(false);
     }
   };
