@@ -5,7 +5,7 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import Gallery from './Gallery';
+import Gallery from './Gallery/Gallery';
 
 function Home({ categorySelection }) {
   const arrowKeyScroll = useRef(null);

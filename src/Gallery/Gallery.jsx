@@ -1,11 +1,15 @@
 // to enable spreading of useSwipeable
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import PropTypes from 'prop-types';
 
+// import css for the component
+import componentStyle from './Gallery.module.css';
+
 // import image categories and their associated images
-import { useSwipeable } from 'react-swipeable';
-import categories from './img/imageLoader';
+
+import categories from '../img/imageLoader';
 
 // keeps track of which images is to be displayed in the gallery
 let currentIndex = 0;
@@ -24,50 +28,57 @@ function Gallery({ categorySelection, arrowKeyScroll }) {
     gallery = Object.values(categories)[categorySelection];
   }
 
-  // highlights the first button when the page loads to match with the first image being displayed
-  useEffect(() => {
-    const firstButton = document.querySelector('.header button');
-    firstButton.classList.add('clicked');
-  }, []);
-
   // creates a state containing the image object being shown in the gallery
-  const [currentImage, setCurrentImage] = useState(Object.values(gallery)[currentIndex]);
+  // starts at 1 so it can be changed to 0 to correctly highlight buttons
+  const [currentImage, setCurrentImage] = useState(Object.values(gallery)[1]);
+
+  // handles changing the image shown in galert
+  const handleChangeImage = (index) => {
+    // updates current index global variable
+    currentIndex = index;
+    // changes the highlighting of the buttons
+    // eslint-disable-next-line no-param-reassign
+    Object.values(gallery).forEach((image) => { image.selected = false; });
+    Object.values(gallery)[index].selected = true;
+    // changes the image
+    setCurrentImage(Object.values(gallery)[index]);
+  };
+
+  // highlights the first button
+  useEffect(() => {
+    handleChangeImage(0);
+  }, []);
 
   // refreshes the gallery when caregory changes
   useEffect(() => {
-    currentIndex = 0;
-    const headerButtons = document.querySelectorAll('.header > button');
-    headerButtons.forEach((button) => button.classList.remove('clicked'));
-    headerButtons[currentIndex].classList.add('clicked');
-    setCurrentImage(Object.values(gallery)[currentIndex]);
+    const index = 0;
+    handleChangeImage(index);
   }, [categorySelection]);
 
   // Secrolls to the next image to the left or right
   const handleScrollImage = (e) => {
     let direction = e;
+    let index;
     if (typeof e === 'object') {
       direction = e.target.className;
     }
     const maxIndex = Object.values(gallery).length - 1;
     if (direction === 'left') {
       if (currentIndex === 0) {
-        currentIndex = maxIndex;
+        index = maxIndex;
       } else {
-        currentIndex -= 1;
+        index = currentIndex - 1;
       }
     } else if (direction === 'right') {
       if (currentIndex === maxIndex) {
-        currentIndex = 0;
+        index = 0;
       } else {
-        currentIndex += 1;
+        index = currentIndex + 1;
       }
     }
 
-    // changes the highlighting of the radial buttons to match the current image
-    const headerButtons = document.querySelectorAll('.header > button');
-    headerButtons.forEach((button) => button.classList.remove('clicked'));
-    headerButtons[currentIndex].classList.add('clicked');
-    setCurrentImage(Object.values(gallery)[currentIndex]);
+    // changes the current image and highlighting of the radial buttons to match
+    handleChangeImage(index);
   };
 
   // in order to pass function to ref
@@ -83,15 +94,9 @@ function Gallery({ categorySelection, arrowKeyScroll }) {
   });
 
   // changes the image to the image selected on the radial buttons
-  const handleChangeImage = (e) => {
-    const index = parseInt(e.target.className, 10);
-    // changes the highlighting of the buttons
-    const headerButtons = document.querySelectorAll('.header > button');
-    headerButtons.forEach((button) => button.classList.remove('clicked'));
-    currentIndex = index;
-    headerButtons[currentIndex].classList.add('clicked');
-    // changes the image
-    setCurrentImage(Object.values(gallery)[index]);
+  const handleSelectImage = (e) => {
+    const index = parseInt(e.target.textContent, 10) - 1;
+    handleChangeImage(index);
   };
 
   // defining properties
@@ -106,30 +111,30 @@ function Gallery({ categorySelection, arrowKeyScroll }) {
   };
 
   return (
-    <div className="gallery">
-      <div className="header">
+    <div className={componentStyle.gallery}>
+      <div className={componentStyle.header}>
         <h1>{title}</h1>
         <h1>-</h1>
         {
         Object.values(gallery).map((image, index) => (
           <button
             type="button"
-            className={index}
+            className={image.selected ? componentStyle.clicked : ''}
             key={image.title}
-            onClick={handleChangeImage}
+            onClick={handleSelectImage}
           >
             {index + 1}
           </button>
         ))
       }
       </div>
-      <div className="image-box">
+      <div className={componentStyle.imageBox}>
         <button type="button" className="left" onClick={handleScrollImage}>🠬</button>
-        <div className="cardcontainer" {...handeSwipes}>
+        <div className={componentStyle.cardcontainer} {...handeSwipes}>
           <div className="card" key={currentImage.title}>
             <img src={currentImage.image} alt={`${currentImage.title} by ${currentImage.by}`} />
-            <div className="credit">
-              <a className="byline" href={currentImage.link} target="_blank" rel="noreferrer">
+            <div className={componentStyle.credit}>
+              <a className={componentStyle.byline} href={currentImage.link} target="_blank" rel="noreferrer">
                 {`${currentImage.title} by ${currentImage.by}`}
               </a>
             </div>
