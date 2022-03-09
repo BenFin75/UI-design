@@ -1,19 +1,17 @@
+// to enable spreading of useSwipeable
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // import image categories and their associated images
+import { useSwipeable } from 'react-swipeable';
 import categories from './img/imageLoader';
 
 // keeps track of which images is to be displayed in the gallery
 let currentIndex = 0;
 
 // main function
-function Gallery({ categorySelection }) {
-  // category should be a numeric string representing which category the user selected
-  Gallery.propTypes = {
-    categorySelection: PropTypes.string.isRequired,
-  };
-
+function Gallery({ categorySelection, arrowKeyScroll }) {
   // handles changing the title of the gallery based on the catergory the user selects
   let title = Object.keys(categories)[0];
   if (Object.keys(categories)[categorySelection]) {
@@ -46,7 +44,10 @@ function Gallery({ categorySelection }) {
 
   // Secrolls to the next image to the left or right
   const handleScrollImage = (e) => {
-    const direction = e.target.className;
+    let direction = e;
+    if (typeof e === 'object') {
+      direction = e.target.className;
+    }
     const maxIndex = Object.values(gallery).length - 1;
     if (direction === 'left') {
       if (currentIndex === 0) {
@@ -61,12 +62,25 @@ function Gallery({ categorySelection }) {
         currentIndex += 1;
       }
     }
+
     // changes the highlighting of the radial buttons to match the current image
     const headerButtons = document.querySelectorAll('.header > button');
     headerButtons.forEach((button) => button.classList.remove('clicked'));
     headerButtons[currentIndex].classList.add('clicked');
     setCurrentImage(Object.values(gallery)[currentIndex]);
   };
+
+  // in order to pass function to ref
+  // eslint-disable-next-line no-param-reassign
+  arrowKeyScroll.current = handleScrollImage;
+
+  const handeSwipes = useSwipeable({
+    onSwipedLeft: () => handleScrollImage('right'),
+    onSwipedRight: () => handleScrollImage('left'),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+    // onSwiped: (eventData) => console.log("User Swiped!", eventData),
+  });
 
   // changes the image to the image selected on the radial buttons
   const handleChangeImage = (e) => {
@@ -78,6 +92,17 @@ function Gallery({ categorySelection }) {
     headerButtons[currentIndex].classList.add('clicked');
     // changes the image
     setCurrentImage(Object.values(gallery)[index]);
+  };
+
+  // defining properties
+  Gallery.propTypes = {
+    categorySelection: PropTypes.string.isRequired,
+    arrowKeyScroll: PropTypes.objectOf(PropTypes.func),
+  };
+
+  // default arrowKeyScroll to null if none is provided
+  Gallery.defaultProps = {
+    arrowKeyScroll: null,
   };
 
   return (
@@ -100,7 +125,7 @@ function Gallery({ categorySelection }) {
       </div>
       <div className="image-box">
         <button type="button" className="left" onClick={handleScrollImage}>🠬</button>
-        <div className="cardcontainer">
+        <div className="cardcontainer" {...handeSwipes}>
           <div className="card" key={currentImage.title}>
             <img src={currentImage.image} alt={`${currentImage.title} by ${currentImage.by}`} />
             <div className="credit">
