@@ -1,4 +1,4 @@
-/* gallery stles */
+@import '../index.css';
 
 .gallery {
   display: flex;
@@ -15,7 +15,7 @@
   box-shadow: 0px 0px 17px 1px black;
 }
 
-.gallery > .header {
+.header {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +23,7 @@
   letter-spacing: 1px;
 }
 
-.gallery > .header button {
+.header button {
   background-color: var(--menu-alt-color);
   font-weight: 600;
   height: 30px;
@@ -33,11 +33,11 @@
   border-radius: 50px;
 }
 
-.gallery > .header > .clicked{
+.header > .clicked{
   background-color: #62dee7;
 }
 
-.gallery > .imageBox {
+.imageBox {
   display: flex;
   min-width: 75vw;
   min-height: 84%;
@@ -47,7 +47,17 @@
   padding: 10px;
 }
 
-.gallery > .imageBox > button {
+.buttonBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.imageBox > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
   height: 100px;
   border: 0;
@@ -55,15 +65,15 @@
   background-color: var(--menu-alt-color);
 }
 
-.gallery > .imageBox > button:first-child {
+.imageBox > button:first-child {
   margin-right: auto;
 }
 
-.gallery > .imageBox > button:last-child {
+.imageBox > button:last-child {
   margin-left: auto;
 }
 
-.gallery .cardcontainer{
+.cardcontainer{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,7 +85,7 @@
   border-radius: 20px;
 }
 
-.gallery .card {
+.card {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -90,7 +100,7 @@
   border-radius: 10px;
 }
 
-.gallery .credit {
+.credit {
   position: relative;
   background-color: #00000075;
   height: 2em;
@@ -103,3 +113,55 @@
   border-radius: 0 0 10px 10px;
 }
 
+@media screen and (max-width: 550px),
+       screen and (max-height: 550px){
+  
+  .imageBox > button {
+    display: none;
+  }
+
+  .gallery {
+    width: 100%;
+    max-height: 80vh;
+    padding: 0px;
+    margin: 0px;
+    box-shadow: none;
+    border-radius: 0px;
+  }
+
+  .header {
+    flex-direction: column;
+    /* gap: 0px; */
+    margin-bottom: 5px;
+  }
+
+  .header > h1 {
+    margin: 0;
+    margin-top: 10px;
+  }
+
+  .header > h2 {
+    display: none;
+  }
+
+  .buttonBox{
+    flex-wrap: wrap;
+  }
+
+  .gallery > .imageBox {
+    width: 100%;
+  }
+
+  .cardcontainer {
+    padding: 0px;
+    height: 100%;
+    background-color: var(--navbar-color);
+  }
+
+  .gallery img {
+    max-width: 100%;
+    max-height: 60vh;
+    box-shadow: 0px 0px 30px 2px #264859;
+    border-radius: 10px;
+  }
+}

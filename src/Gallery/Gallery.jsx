@@ -114,24 +114,26 @@ function Gallery({ categorySelection, arrowKeyScroll }) {
     <div className={componentStyle.gallery}>
       <div className={componentStyle.header}>
         <h1>{title}</h1>
-        <h1>-</h1>
-        {
-        Object.values(gallery).map((image, index) => (
-          <button
-            type="button"
-            className={image.selected ? componentStyle.clicked : ''}
-            key={image.title}
-            onClick={handleSelectImage}
-          >
-            {index + 1}
-          </button>
-        ))
-      }
+        <h2>-</h2>
+        <div className={componentStyle.buttonBox}>
+          {
+          Object.values(gallery).map((image, index) => (
+            <button
+              type="button"
+              className={image.selected ? componentStyle.clicked : ''}
+              key={image.title}
+              onClick={handleSelectImage}
+            >
+              {index + 1}
+            </button>
+          ))
+        }
+        </div>
       </div>
       <div className={componentStyle.imageBox}>
         <button type="button" className="left" onClick={handleScrollImage}>🠬</button>
         <div className={componentStyle.cardcontainer} {...handeSwipes}>
-          <div className="card" key={currentImage.title}>
+          <div className={componentStyle.card} key={currentImage.title}>
             <img src={currentImage.image} alt={`${currentImage.title} by ${currentImage.by}`} />
             <div className={componentStyle.credit}>
               <a className={componentStyle.byline} href={currentImage.link} target="_blank" rel="noreferrer">
